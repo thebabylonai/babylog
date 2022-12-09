@@ -1,0 +1,14 @@
+device:
+  ip: '10.130.11.25'
+  uuid: '3d48b246-94f0-4e62-8231-e3f5b471db0c'
+  group: 'GROUP_NAME'
+data:
+  interval: 180000        # ms between captures
+  upload_batch_size: 5    # number of images you upload per batch
+S3_storage:
+  aws_access_key_id: 'AKIAWAZS7JZBIMS2Y6VP'
+  aws_secret_access_key: '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'
+  bucket_name: 'test-babylog'
+  bucket_region: 'eu-west-3'
+local_storage_options:
+  delete_timeout: 1800000 # ms how long logs are saved locally
