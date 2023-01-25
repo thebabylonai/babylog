@@ -11,6 +11,7 @@ enum VisionModelType {
 message VisionModel {
     VisionModelType type = 1;
     string version = 2;
+    string name = 3;
 }
 
 message DeviceDetails {
@@ -47,12 +48,24 @@ message BoundingBox {
     optional float confidence = 5;
 }
 
+enum InferenceDevice {
+    CPU = 0;
+    GPU = 1;
+}
+
+message InferenceStats {
+    int32 latency = 1;
+    InferenceDevice inference_device = 2;
+    optional string error_message = 3;
+}
+
 message SingleImagePrediction {
     int64 timestamp = 1;
     DeviceDetails device_details= 2;
     VisionModel model = 3;
     Image raw_image = 4;
     optional bytes prediction = 5;
-    repeated ClassificationResult classification_result = 6;
-    repeated BoundingBox bounding_boxes = 7;
+    optional InferenceStats inference_stats = 6;
+    repeated ClassificationResult classification_result = 7;
+    repeated BoundingBox bounding_boxes = 8;
 }
