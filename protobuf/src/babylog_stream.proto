@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package babylog_stream;
+
+
+enum VisionModelType {
+    CLASSIFICATION = 0;
+    DETECTION = 1;
+}
+
+message VisionModel {
+    VisionModelType type = 1;
+    string version = 2;
+}
+
+message DeviceDetails {
+    string device_name = 1;
+    optional string group_name = 2;
+}
+
+message Image {
+    int32 width = 1;
+    int32 height = 2;
+    optional int32 channels = 3;
+    bytes image_bytes = 4;
+}
+
+message ImageBatch {
+    int32 width = 1;
+    int32 height = 2;
+    int32 channels = 3;
+    int32 batch_size = 4;
+    bytes image_bytes = 5;
+}
+
+message ClassificationResult {
+    optional int32 class_id = 1;
+    string class_name = 2;
+    float probability = 3;
+}
+
+message BoundingBox {
+    int32 x = 1;
+    int32 y = 2;
+    int32 width = 3;
+    int32 height = 4;
+    optional float confidence = 5;
+}
+
+message SingleImagePrediction {
+    int64 timestamp = 1;
+    DeviceDetails device_details= 2;
+    VisionModel model = 3;
+    Image raw_image = 4;
+    optional bytes prediction = 5;
+    repeated ClassificationResult classification_result = 6;
+    repeated BoundingBox bounding_boxes = 7;
+}

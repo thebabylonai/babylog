@@ -8,6 +8,10 @@ import queue
 from typing import Optional, Dict
 import pickle
 
+# needed because of issue
+# https://github.com/python/cpython/issues/86813#issuecomment-1246097184 (from )
+import concurrent.futures.thread
+
 import boto3
 from botocore.config import Config as BotoConfig
 import numpy as np
@@ -41,8 +45,6 @@ class BabylonData:
     # desc: str
     # params: Dict
 
-#TODO: S3 writer class
-# class S3Writer:
 
 class Config:
     def __init__(self, config_path: str):

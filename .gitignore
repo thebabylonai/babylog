@@ -1,0 +1,4 @@
+.idea
+.virtenv
+*.egg-info
+python/build
