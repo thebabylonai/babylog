@@ -20,24 +20,27 @@ message DeviceDetails {
 }
 
 message Image {
-    int32 width = 1;
-    int32 height = 2;
+    int32 height = 1;
+    int32 width = 2;
     optional int32 channels = 3;
     bytes image_bytes = 4;
 }
 
 message ImageBatch {
-    int32 width = 1;
-    int32 height = 2;
+    int32 height = 1;
+    int32 width = 2;
     int32 channels = 3;
     int32 batch_size = 4;
     bytes image_bytes = 5;
 }
 
+message SingleClassificationResult {
+    string class_name = 1;
+    float probability = 2;
+}
+
 message ClassificationResult {
-    optional int32 class_id = 1;
-    string class_name = 2;
-    float probability = 3;
+    repeated SingleClassificationResult classification_result = 1;
 }
 
 message BoundingBox {
@@ -45,12 +48,14 @@ message BoundingBox {
     int32 y = 2;
     int32 width = 3;
     int32 height = 4;
-    optional float confidence = 5;
+    float confidence = 5;
+    ClassificationResult classification_results = 6;
 }
 
 enum InferenceDevice {
     CPU = 0;
     GPU = 1;
+    CUDA = 2;
 }
 
 message InferenceStats {
@@ -60,12 +65,12 @@ message InferenceStats {
 }
 
 message SingleImagePrediction {
-    int64 timestamp = 1;
-    DeviceDetails device_details= 2;
+    int64 timestamp = 1; // ms
+    DeviceDetails device_details = 2;
     VisionModel model = 3;
     Image raw_image = 4;
     optional bytes prediction = 5;
     optional InferenceStats inference_stats = 6;
-    repeated ClassificationResult classification_result = 7;
+    ClassificationResult classification_results = 7;
     repeated BoundingBox bounding_boxes = 8;
 }

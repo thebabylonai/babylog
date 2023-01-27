@@ -17,6 +17,7 @@ setuptools.setup(
     install_requires=['numpy',
                       'PyYAML',
                       'opencv-python',
-                      'boto3'
+                      'boto3',
+                      'protobuf'
     ]
 )
