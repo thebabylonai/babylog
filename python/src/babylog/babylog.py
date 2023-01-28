@@ -1,27 +1,24 @@
-import time
-from io import BytesIO
-from datetime import datetime
-import threading
-import queue
-from typing import Optional, Dict, List, TypedDict
-import pickle
 # needed because of issue https://github.com/python/cpython/issues/86813#issuecomment-1246097184
 import concurrent.futures.thread
 from concurrent.futures.thread import ThreadPoolExecutor
-from copy import deepcopy
+from datetime import datetime
+
+import time
+from typing import Optional, Dict, List
+
 
 import boto3
-from botocore.config import Config as BotoConfig
 import numpy as np
-import cv2
 
+
+from babylog.config import Config
+from babylog.data_utils import BoundingBoxDict
+from babylog.logger import babylogger
 from babylog.protobuf import VisionModelType, VisionModel, DeviceDetails, \
     Image, ImageBatch, ClassificationResult, BoundingBox,\
     InferenceDevice, InferenceStats, SingleImagePrediction
-from babylog.config import Config
 from babylog.utils import ndarray_to_image, ndarray_to_bytes, classification_from_dict, \
     detection_from_dict
-from babylog.data_utils import BoundingBoxDict
 
 
 class Babylog:
@@ -29,13 +26,15 @@ class Babylog:
         self.config = Config(config_path)
         self._shutdown = False
         self.executor = ThreadPoolExecutor(max_workers=self.config.data_params.max_workers)
+        babylogger.info(f'initialized babylog client')
 
     def log(self, *args, **kwargs):
         if self.config is not None:
             try:
                 future = self.executor.submit(self._log, *args, **kwargs)
-            except:
-                raise ValueError('could not submit logging job ')
+            except Exception as e:
+                babylogger.error(f'could not submit logging job: {e}')
+                raise ValueError(f'could not submit logging job: {e}')
             return future
         return None
 
@@ -93,15 +92,17 @@ class Babylog:
             s3_storage.Bucket(self.config.storage.bucket_name)\
                 .put_object(Key=filename,
                             Body=single_image_prediction.SerializeToString())
-            print(f'logged {filename}')
+            babylogger.info(f'successfully logged {filename}')
         except Exception as e:
-            print(f'error: {e}')
+            babylogger.error(f'could not log prediction: {e}')
+            raise ValueError(f'could not log prediction: {e}')
 
     @property
     def shutdown(self):
         return self._shutdown
 
     def shutdown(self):
+        babylogger.info(f'shutting down babylog client')
         self._shutdown = True
         self.executor.shutdown(wait=True)
 
