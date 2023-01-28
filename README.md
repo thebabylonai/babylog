@@ -1,7 +1,7 @@
 # Welcome to Babylog
 Welcome to babylog, a Python library, designed to stream image and video data from edge devices to the cloud with ease. Babylog is maintained by [BabylonAI, a Zurich-based YC-backed startup](https://babylonai.dev).
 
-![github_background](https://user-images.githubusercontent.com/16129326/215274460-9efe7935-2de4-464c-a6ca-d023aa5ad722.png)
+![github-welcome-image](https://user-images.githubusercontent.com/16129326/215274632-4a8f423f-fbf8-400e-9060-b362e4d45c84.png)
 
 The primary goal of this library is to empower machine learning teams to log images and predictions, ensuring their computer vision models are working as intended. Without proper monitoring, small issues with a computer vision model can have dire consequences, such as a self-driving car incorrectly identifying a stop sign and causing an accident. Babylog aims to prevent such scenarios by providing the tools necessary for monitoring and debugging computer vision models.
 
