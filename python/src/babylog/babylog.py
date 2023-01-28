@@ -17,6 +17,7 @@ from babylog.logger import babylogger
 from babylog.protobuf import VisionModelType, VisionModel, DeviceDetails, \
     Image, ImageBatch, ClassificationResult, BoundingBox,\
     InferenceDevice, InferenceStats, ImagePrediction
+from babylog.pubsub import Publisher
 from babylog.utils import bytes_to_image, image_to_bytes, ndarray_to_Image,\
     classification_from_dict, detection_from_dict
 
@@ -31,6 +32,11 @@ class Babylog:
         self.save_cloud = save_cloud
         self.stream = stream
         self._shutdown = False
+        babylogger.info(f'self.stream: {self.stream}')
+        if self.stream:
+            self._publisher = Publisher(self.config.device.ip, self.config.device.ip, self.config.device.name)
+        else:
+            self._publisher = None
         self.executor = ThreadPoolExecutor(max_workers=self.config.data_params.max_workers)
         babylogger.info(f'initialized babylog client')
 
@@ -132,6 +138,13 @@ class Babylog:
                     f.write(prediction_binary)
                 babylogger.info(f'successfully logged "{local_dir}{filename}" locally')
 
+            if self._publisher is not None:
+                ret = self._publisher.send(prediction_binary)
+                if ret:
+                    babylogger.info(f'successfully streamed {filename}')
+                else:
+                    babylogger.error(f'could not stream {filename}')
+
         except Exception as e:
             babylogger.error(f'could not log prediction: {e}')
             raise ValueError(f'could not log prediction: {e}')
@@ -142,6 +155,8 @@ class Babylog:
 
     def shutdown(self):
         babylogger.info(f'shutting down babylog client')
+        if self._publisher is not None:
+            self._publisher.shutdown()
         self._shutdown = True
         self.executor.shutdown(wait=True)
 

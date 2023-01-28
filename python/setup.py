@@ -18,6 +18,7 @@ setuptools.setup(
                       'PyYAML',
                       'opencv-python',
                       'boto3',
-                      'protobuf'
+                      'protobuf',
+                      'zmq'
     ]
 )

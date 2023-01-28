@@ -4,9 +4,11 @@ import yaml
 
 from babylog.logger import babylogger
 
+
 @dataclass
 class Device:
     ip: str
+    port: int
     name: str
     group: str
 
@@ -32,7 +34,10 @@ class Config:
         babylogger.info(f'babylog.config contents: ')
         babylogger.info(f'{config}')
         try:
-            self.device = Device(config['device']['ip'], config['device']['name'], config['device']['group'])
+            self.device = Device(config['device']['ip'],
+                                 config['device']['port'],
+                                 config['device']['name'],
+                                 config['device']['group'])
             self.data_params = DataParams(config['data']['interval'],
                                           config['data']['max_workers'])
             if config['S3_storage'] is None:
