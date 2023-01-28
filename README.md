@@ -1,4 +1,7 @@
 # Welcome to Babylog
+
+[![GitHub Super-Linter](https://github.com/thebabylonai/babylog/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
 Welcome to babylog, a Python library, designed to stream image and video data from edge devices to the cloud with ease. Babylog is maintained by [BabylonAI, a Zurich-based YC-backed startup](https://babylonai.dev).
 
 ![github-welcome-image](https://user-images.githubusercontent.com/16129326/215274632-4a8f423f-fbf8-400e-9060-b362e4d45c84.png)
