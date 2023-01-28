@@ -24,4 +24,5 @@ for i in tqdm(range(100)):
                        'classification': {'dog': 0.8, 'cat': 0.2}} for i in range(3)
                        ])
            )
+    time.sleep(1)
 

@@ -4,7 +4,7 @@ device:
   name: 'DEVICE_NAME'
   group: 'GROUP_NAME'
 data:
-  interval: 180000        # ms between captures
+  interval: 3000        # ms between captures
   max_workers: 4
 S3_storage:
   aws_access_key_id: 'AKIAWAZS7JZBIMS2Y6VP'

@@ -34,6 +34,7 @@ class Babylog:
         self.save_cloud = save_cloud
         self.stream = stream
         self._shutdown = False
+        self._last_logged = time.perf_counter()
         babylogger.info(f'self.stream: {self.stream}')
         if self.stream:
             self._publisher = Publisher(self.config.device.ip, self.config.device.ip, self.config.device.name)
@@ -43,7 +44,8 @@ class Babylog:
         babylogger.info(f'initialized babylog client')
 
     def log(self, *args, **kwargs):
-        if self.config is not None:
+        if self.config is not None and (time.perf_counter() - self._last_logged)*1000 \
+                >= self.config.data_params.interval:
             try:
                 future = self.executor.submit(self._log, *args, **kwargs)
             except Exception as e:
@@ -146,7 +148,7 @@ class Babylog:
                     babylogger.info(f'successfully streamed {filename}')
                 else:
                     babylogger.error(f'could not stream {filename}')
-
+            self._last_logged = time.perf_counter()
         except Exception as e:
             babylogger.error(f'could not log prediction: {e}')
             raise ValueError(f'could not log prediction: {e}')
