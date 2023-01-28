@@ -6,17 +6,22 @@ import zmq
 from babylog.logger import babylogger
 from babylog.deserialize import LoggedPrediction
 
+
 class Publisher:
-    def __init__(self, address: str, port: int, topic: str, context_io_threads: int = 1):
+    def __init__(
+        self, address: str, port: int, topic: str, context_io_threads: int = 1
+    ):
         self._topic = topic
         self._context = zmq.Context(context_io_threads)
         try:
             self._publisher = zmq.Socket(self._context, zmq.PUB)
-            self._publisher.bind(f'tcp://{address}:{port}')
-            babylogger.info(f'Publisher with topic ({topic}) succesfully binded to port {port}')
+            self._publisher.bind(f"tcp://{address}:{port}")
+            babylogger.info(
+                f"Publisher with topic ({topic}) succesfully binded to port {port}"
+            )
         except Exception as e:
-            babylogger.error(f'could not initialize publisher: {e}')
-            raise ValueError(f'could not initialize publisher: {e}')
+            babylogger.error(f"could not initialize publisher: {e}")
+            raise ValueError(f"could not initialize publisher: {e}")
 
     def send(self, data: bytes) -> bool:
         try:
@@ -28,7 +33,7 @@ class Publisher:
                 return False
             return True
         except Exception as e:
-            babylogger.error(f'exception while sending with publisher: {e}')
+            babylogger.error(f"exception while sending with publisher: {e}")
             return False
 
     def shutdown(self):
@@ -36,7 +41,14 @@ class Publisher:
 
 
 class Subscriber:
-    def __init__(self, address: str, port: int, topic: str, max_data_history: int = 10, context_io_threads: int = 1):
+    def __init__(
+        self,
+        address: str,
+        port: int,
+        topic: str,
+        max_data_history: int = 10,
+        context_io_threads: int = 1,
+    ):
         self._topic = topic
         self._max_data_history = max_data_history
         self._shutdown = False
@@ -46,19 +58,21 @@ class Subscriber:
         self._subscriber.setsockopt(zmq.RCVTIMEO, 1000)
 
         try:
-            self._subscriber.connect(f'tcp://{address}:{port}')
+            self._subscriber.connect(f"tcp://{address}:{port}")
             self._subscriber.setsockopt_string(zmq.SUBSCRIBE, topic)
-            babylogger.info(f'subscriber with topic ({topic}) successfully connected to port {port}')
+            babylogger.info(
+                f"subscriber with topic ({topic}) successfully connected to port {port}"
+            )
         except Exception as e:
-            babylogger.error(f'could not setup subscriber: {e}')
+            babylogger.error(f"could not setup subscriber: {e}")
             raise
         self._mutex = threading.Lock()
-        self._data = b''
+        self._data = b""
         self._data_queue = queue.Queue(maxsize=1000)
         threading.Thread(target=self.receive).start()
 
     def shutdown(self):
-        babylogger.info(f'shutting down {self._topic} stream.')
+        babylogger.info(f"shutting down {self._topic} stream.")
         self._shutdown = True
 
     def receive(self):
@@ -66,7 +80,7 @@ class Subscriber:
             try:
                 if self._subscriber.poll(1000, zmq.POLLIN):
                     recv_msgs = self._subscriber.recv_multipart()
-                    assert(len(recv_msgs) == 2)
+                    assert len(recv_msgs) == 2
                     self._mutex.acquire()
                     self._data = recv_msgs[1]
                     print(self._data)
@@ -75,8 +89,8 @@ class Subscriber:
                 else:
                     pass
             except Exception as e:
-                babylogger.error(f'could not receive message: {e}')
-        babylogger.info(f'{self._topic} stream shut down')
+                babylogger.error(f"could not receive message: {e}")
+        babylogger.info(f"{self._topic} stream shut down")
 
     @property
     def data(self):
@@ -91,7 +105,6 @@ class Subscriber:
         try:
             data = self._data_queue.get(timeout=max_timeout)
         except Exception as e:
-            babylogger.info(f'could not get message: {e}')
+            babylogger.info(f"could not get message: {e}")
             return None
         return LoggedPrediction.from_bytes(data)
-

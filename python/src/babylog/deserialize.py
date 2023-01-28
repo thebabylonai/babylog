@@ -47,7 +47,7 @@ class LoggedPrediction:
 
     @classmethod
     def from_path(cls, filepath: str):
-        with open(filepath, 'rb') as f:
+        with open(filepath, "rb") as f:
             binary_ = f.read()
         return cls(binary_)
 

@@ -29,25 +29,28 @@ class StorageS3:
 
 class Config:
     def __init__(self, config_path: str):
-        with open(config_path, 'r') as filehandle:
+        with open(config_path, "r") as filehandle:
             config = yaml.load(filehandle, Loader=yaml.FullLoader)
-        babylogger.info(f'babylog.config contents: ')
-        babylogger.info(f'{config}')
+        babylogger.info(f"babylog.config contents: ")
+        babylogger.info(f"{config}")
         try:
-            self.device = Device(config['device']['ip'],
-                                 config['device']['port'],
-                                 config['device']['name'],
-                                 config['device']['group'])
-            self.data_params = DataParams(config['data']['interval'],
-                                          config['data']['max_workers'])
-            if config['S3_storage'] is None:
+            self.device = Device(
+                config["device"]["ip"],
+                config["device"]["port"],
+                config["device"]["name"],
+                config["device"]["group"],
+            )
+            self.data_params = DataParams(
+                config["data"]["interval"], config["data"]["max_workers"]
+            )
+            if config["S3_storage"] is None:
                 raise NotImplementedError
-            self.storage = StorageS3(config['S3_storage']['aws_access_key_id'],
-                                    config['S3_storage']['aws_secret_access_key'],
-                                    config['S3_storage']['bucket_name'],
-                                    config['S3_storage']['bucket_region'])
+            self.storage = StorageS3(
+                config["S3_storage"]["aws_access_key_id"],
+                config["S3_storage"]["aws_secret_access_key"],
+                config["S3_storage"]["bucket_name"],
+                config["S3_storage"]["bucket_region"],
+            )
         except Exception as e:
-            babylogger.error(f'could not properly setup config: {e}')
-            raise ValueError(f'could not properly setup config: {e}')
-
-
+            babylogger.error(f"could not properly setup config: {e}")
+            raise ValueError(f"could not properly setup config: {e}")
