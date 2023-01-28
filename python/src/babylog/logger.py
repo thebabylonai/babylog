@@ -4,7 +4,7 @@ from logging.handlers import TimedRotatingFileHandler
 import os
 
 
-def init_logger(name, dir_name='./babylogs'):
+def init_logger(name, dir_name='./babylog/logs/'):
     timestamp_save = datetime.now().strftime('%Y-%m-%d:%H:%M')
     daily_dir = os.path.join(dir_name, timestamp_save)
 

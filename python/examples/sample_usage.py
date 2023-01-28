@@ -6,11 +6,11 @@ from tqdm import tqdm
 from babylog import Babylog, VisionModelType, InferenceDevice
 
 
-bl = Babylog('../resources/config.yaml')
-img = cv2.imread('../resources/flame_4k.jpg')
+bl = Babylog('../resources/config.yaml', save_cloud=True)
+img = cv2.imread('../resources/panda.jpg')
 
 
-for i in tqdm(range(100)):
+for i in tqdm(range(10)):
     bl.log(image=img,
            prediction=img,
            model_type=VisionModelType.DETECTION,

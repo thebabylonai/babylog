@@ -2,7 +2,7 @@
 import concurrent.futures.thread
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime
-
+import os
 import time
 from typing import Optional, Dict, List
 
@@ -22,8 +22,14 @@ from babylog.utils import ndarray_to_image, ndarray_to_bytes, classification_fro
 
 
 class Babylog:
-    def __init__(self, config_path: str):
+    def __init__(self, config_path: str,
+                 save_local: bool = True,
+                 save_cloud: bool = False,
+                 stream: bool = False):
         self.config = Config(config_path)
+        self.save_local = save_local
+        self.save_cloud = save_cloud
+        self.stream = stream
         self._shutdown = False
         self.executor = ThreadPoolExecutor(max_workers=self.config.data_params.max_workers)
         babylogger.info(f'initialized babylog client')
@@ -43,6 +49,7 @@ class Babylog:
              model_type: VisionModelType,
              model_name: str,
              model_version: str,
+             home_dir: str = './babylog/',
              compress: Optional[bool] = True,
              prediction: Optional[np.ndarray] = None,
              timestamp: Optional[int] = None,
@@ -76,23 +83,37 @@ class Babylog:
                 single_image_prediction.bounding_boxes.extend(detection_from_dict(detection))
             else:
                 raise NotImplementedError
-            s3_storage = boto3.resource(
-                's3',
-                aws_access_key_id=self.config.storage.aws_access_key_id,
-                aws_secret_access_key=self.config.storage.aws_secret_access_key,
-                region_name=self.config.storage.bucket_region
-            )
+
             timestamp_save = datetime.now().strftime('%Y-%m-%d')
             timestamp_save_ms = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
             group = self.config.device.group
             name = self.config.device.name
-            filename = f'{VisionModelType.Name(model_type)}/' \
+            dir_name = f'{VisionModelType.Name(model_type)}/' \
                        f'{model_name}/{model_version}/{group}/{name}/'\
-                       f'{timestamp_save}/{timestamp_save_ms}'
-            s3_storage.Bucket(self.config.storage.bucket_name)\
-                .put_object(Key=filename,
-                            Body=single_image_prediction.SerializeToString())
-            babylogger.info(f'successfully logged {filename}')
+                       f'{timestamp_save}/'
+            filename = f'{timestamp_save_ms}.bin'
+            prediction_binary = single_image_prediction.SerializeToString()
+
+            if self.save_cloud:
+                s3_storage = boto3.resource(
+                    's3',
+                    aws_access_key_id=self.config.storage.aws_access_key_id,
+                    aws_secret_access_key=self.config.storage.aws_secret_access_key,
+                    region_name=self.config.storage.bucket_region
+                )
+                s3_storage.Bucket(self.config.storage.bucket_name)\
+                    .put_object(Key=f'{dir_name}{filename}',
+                                Body=prediction_binary)
+                babylogger.info(f'successfully logged "{dir_name}{filename}" to cloud')
+
+            if self.save_local:
+                local_dir = f'{home_dir}{dir_name}'
+                if not (os.path.isdir(local_dir)):
+                    os.makedirs(local_dir, exist_ok=True)
+                with open(f'{local_dir}{filename}', 'wb') as f:
+                    f.write(prediction_binary)
+                babylogger.info(f'successfully logged "{local_dir}{filename}" locally')
+
         except Exception as e:
             babylogger.error(f'could not log prediction: {e}')
             raise ValueError(f'could not log prediction: {e}')

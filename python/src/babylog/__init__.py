@@ -1,2 +1,2 @@
-from .babylog import *
-from .protobuf import *
+from babylog.babylog import *
+from babylog.protobuf import *
