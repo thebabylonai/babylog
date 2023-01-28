@@ -83,7 +83,6 @@ class Subscriber:
                     assert len(recv_msgs) == 2
                     self._mutex.acquire()
                     self._data = recv_msgs[1]
-                    print(self._data)
                     self._data_queue.put(self._data)
                     self._mutex.release()
                 else:
