@@ -8,25 +8,19 @@ from babylog.data_utils import BoundingBoxDict
 from babylog.protobuf import Image, ClassificationResult, BoundingBox
 
 
-def bytes_to_ndarray(raw_bytes_: bytes) -> np.ndarray:
-    bytes_ = BytesIO(raw_bytes_)
-    return np.load(bytes_, allow_pickle=False)
+def bytes_to_image(raw_bytes_: bytes) -> np.ndarray:
+    return cv2.imdecode(np.frombuffer(raw_bytes_, np.byte), cv2.IMREAD_ANYCOLOR)
 
 
-def ndarray_to_bytes(array_: np.ndarray, compress: bool = True) -> bytes:
-    bytes_ = BytesIO()
-    np.save(bytes_, array_, allow_pickle=False)
-    if compress:
-        return cv2.imencode('.jpg', array_)[1].tobytes()
-    else:
-        return bytes_.getvalue()
+def image_to_bytes(array_: np.ndarray) -> bytes:
+    return cv2.imencode('.jpg', array_)[1].tobytes()
 
 
-def ndarray_to_image(array_: np.ndarray, compress: bool = True) -> Image:
+def ndarray_to_Image(array_: np.ndarray) -> Image:
     assert isinstance(array_, np.ndarray), 'please pass a numpy array'
     assert len(array_.shape) == 3, 'np.ndarray image has more than 3 dimensions'
     image = Image(**dict(zip(list(Image.DESCRIPTOR.fields_by_name.keys()),
-                             [*array_.shape, ndarray_to_bytes(array_=array_, compress=compress)])))
+                             [*array_.shape, image_to_bytes(array_=array_)])))
     return image
 
 
@@ -55,4 +49,5 @@ def detection_from_dict(bboxes: List[BoundingBoxDict]) -> List[BoundingBox]:
         dict_.pop('classification')
         bboxes_message = BoundingBox(**dict_)
         bboxes_message.classification_result.extend(classification_from_dict(classifier_result_))
+        detections.append(bboxes_message)
     return detections

@@ -4,8 +4,9 @@ package babylog_stream;
 
 
 enum VisionModelType {
-    CLASSIFICATION = 0;
-    DETECTION = 1;
+    NONE = 0;
+    CLASSIFICATION = 1;
+    DETECTION = 2;
 }
 
 message VisionModel {
@@ -49,9 +50,10 @@ message BoundingBox {
 }
 
 enum InferenceDevice {
-    CPU = 0;
-    GPU = 1;
-    CUDA = 2;
+    DEFAULT = 0;
+    CPU = 1;
+    GPU = 2;
+    CUDA = 3;
 }
 
 message InferenceStats {
@@ -60,12 +62,12 @@ message InferenceStats {
     optional string error_message = 3;
 }
 
-message SingleImagePrediction {
+message ImagePrediction {
     int64 timestamp = 1; // ms
     DeviceDetails device_details = 2;
     VisionModel model = 3;
     Image raw_image = 4;
-    optional bytes prediction = 5;
+    optional Image prediction = 5;
     optional InferenceStats inference_stats = 6;
     repeated ClassificationResult classification_result = 7;
     repeated BoundingBox bounding_boxes = 8;

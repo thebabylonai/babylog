@@ -7,9 +7,11 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 CLASSIFICATION: VisionModelType
 CPU: InferenceDevice
 CUDA: InferenceDevice
+DEFAULT: InferenceDevice
 DESCRIPTOR: _descriptor.FileDescriptor
 DETECTION: VisionModelType
 GPU: InferenceDevice
+NONE: VisionModelType
 
 class BoundingBox(_message.Message):
     __slots__ = ["classification_result", "confidence", "height", "width", "x", "y"]
@@ -69,17 +71,7 @@ class ImageBatch(_message.Message):
     width: int
     def __init__(self, height: _Optional[int] = ..., width: _Optional[int] = ..., channels: _Optional[int] = ..., batch_size: _Optional[int] = ..., image_bytes: _Optional[bytes] = ...) -> None: ...
 
-class InferenceStats(_message.Message):
-    __slots__ = ["error_message", "inference_device", "latency"]
-    ERROR_MESSAGE_FIELD_NUMBER: _ClassVar[int]
-    INFERENCE_DEVICE_FIELD_NUMBER: _ClassVar[int]
-    LATENCY_FIELD_NUMBER: _ClassVar[int]
-    error_message: str
-    inference_device: InferenceDevice
-    latency: int
-    def __init__(self, latency: _Optional[int] = ..., inference_device: _Optional[_Union[InferenceDevice, str]] = ..., error_message: _Optional[str] = ...) -> None: ...
-
-class SingleImagePrediction(_message.Message):
+class ImagePrediction(_message.Message):
     __slots__ = ["bounding_boxes", "classification_result", "device_details", "inference_stats", "model", "prediction", "raw_image", "timestamp"]
     BOUNDING_BOXES_FIELD_NUMBER: _ClassVar[int]
     CLASSIFICATION_RESULT_FIELD_NUMBER: _ClassVar[int]
@@ -94,10 +86,20 @@ class SingleImagePrediction(_message.Message):
     device_details: DeviceDetails
     inference_stats: InferenceStats
     model: VisionModel
-    prediction: bytes
+    prediction: Image
     raw_image: Image
     timestamp: int
-    def __init__(self, timestamp: _Optional[int] = ..., device_details: _Optional[_Union[DeviceDetails, _Mapping]] = ..., model: _Optional[_Union[VisionModel, _Mapping]] = ..., raw_image: _Optional[_Union[Image, _Mapping]] = ..., prediction: _Optional[bytes] = ..., inference_stats: _Optional[_Union[InferenceStats, _Mapping]] = ..., classification_result: _Optional[_Iterable[_Union[ClassificationResult, _Mapping]]] = ..., bounding_boxes: _Optional[_Iterable[_Union[BoundingBox, _Mapping]]] = ...) -> None: ...
+    def __init__(self, timestamp: _Optional[int] = ..., device_details: _Optional[_Union[DeviceDetails, _Mapping]] = ..., model: _Optional[_Union[VisionModel, _Mapping]] = ..., raw_image: _Optional[_Union[Image, _Mapping]] = ..., prediction: _Optional[_Union[Image, _Mapping]] = ..., inference_stats: _Optional[_Union[InferenceStats, _Mapping]] = ..., classification_result: _Optional[_Iterable[_Union[ClassificationResult, _Mapping]]] = ..., bounding_boxes: _Optional[_Iterable[_Union[BoundingBox, _Mapping]]] = ...) -> None: ...
+
+class InferenceStats(_message.Message):
+    __slots__ = ["error_message", "inference_device", "latency"]
+    ERROR_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    INFERENCE_DEVICE_FIELD_NUMBER: _ClassVar[int]
+    LATENCY_FIELD_NUMBER: _ClassVar[int]
+    error_message: str
+    inference_device: InferenceDevice
+    latency: int
+    def __init__(self, latency: _Optional[int] = ..., inference_device: _Optional[_Union[InferenceDevice, str]] = ..., error_message: _Optional[str] = ...) -> None: ...
 
 class VisionModel(_message.Message):
     __slots__ = ["name", "type", "version"]

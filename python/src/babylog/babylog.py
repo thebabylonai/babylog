@@ -16,9 +16,9 @@ from babylog.data_utils import BoundingBoxDict
 from babylog.logger import babylogger
 from babylog.protobuf import VisionModelType, VisionModel, DeviceDetails, \
     Image, ImageBatch, ClassificationResult, BoundingBox,\
-    InferenceDevice, InferenceStats, SingleImagePrediction
-from babylog.utils import ndarray_to_image, ndarray_to_bytes, classification_from_dict, \
-    detection_from_dict
+    InferenceDevice, InferenceStats, ImagePrediction
+from babylog.utils import bytes_to_image, image_to_bytes, ndarray_to_Image,\
+    classification_from_dict, detection_from_dict
 
 
 class Babylog:
@@ -50,22 +50,40 @@ class Babylog:
              model_name: str,
              model_version: str,
              home_dir: str = './babylog/',
-             compress: Optional[bool] = True,
              prediction: Optional[np.ndarray] = None,
              timestamp: Optional[int] = None,
              latency: Optional[int] = None,
              inference_device: Optional[InferenceDevice] = None,
              classification: Optional[Dict[str, float]] = None,
              detection: Optional[List[BoundingBoxDict]] = None,
-             error_message: Optional[str] = None
+             error_message: Optional[str] = ''
              ):
+        """
+
+        Args:
+            image ():
+            model_type ():
+            model_name ():
+            model_version ():
+            home_dir ():
+            prediction ():
+            timestamp ():
+            latency ():
+            inference_device ():
+            classification ():
+            detection ():
+            error_message ():
+
+        Returns:
+
+        """
         try:
-            single_image_prediction = SingleImagePrediction()
-            single_image_prediction.raw_image.CopyFrom(ndarray_to_image(array_=image, compress=compress))
+            single_image_prediction = ImagePrediction()
+            single_image_prediction.raw_image.CopyFrom(ndarray_to_Image(array_=image))
             single_image_prediction.model.CopyFrom(VisionModel(type=model_type, version=model_version, name=model_name))
 
             if prediction is not None:
-                single_image_prediction.prediction = ndarray_to_bytes(array_=prediction, compress=compress)
+                single_image_prediction.prediction.CopyFrom(ndarray_to_Image(array_=prediction))
 
             if timestamp is not None:
                 single_image_prediction.timestamp = timestamp
