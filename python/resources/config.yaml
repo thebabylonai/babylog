@@ -1,7 +1,7 @@
 device:
   ip: '127.0.0.1'
   port: 5555
-  name: '3d48b246-94f0-4e62-8231-e3f5b471db0c'
+  name: 'DEVICE_NAME'
   group: 'GROUP_NAME'
 data:
   interval: 180000        # ms between captures
