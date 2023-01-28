@@ -12,26 +12,28 @@ DETECTION: VisionModelType
 GPU: InferenceDevice
 
 class BoundingBox(_message.Message):
-    __slots__ = ["classification_results", "confidence", "height", "width", "x", "y"]
-    CLASSIFICATION_RESULTS_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["classification_result", "confidence", "height", "width", "x", "y"]
+    CLASSIFICATION_RESULT_FIELD_NUMBER: _ClassVar[int]
     CONFIDENCE_FIELD_NUMBER: _ClassVar[int]
     HEIGHT_FIELD_NUMBER: _ClassVar[int]
     WIDTH_FIELD_NUMBER: _ClassVar[int]
     X_FIELD_NUMBER: _ClassVar[int]
     Y_FIELD_NUMBER: _ClassVar[int]
-    classification_results: ClassificationResult
+    classification_result: _containers.RepeatedCompositeFieldContainer[ClassificationResult]
     confidence: float
     height: int
     width: int
     x: int
     y: int
-    def __init__(self, x: _Optional[int] = ..., y: _Optional[int] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., confidence: _Optional[float] = ..., classification_results: _Optional[_Union[ClassificationResult, _Mapping]] = ...) -> None: ...
+    def __init__(self, x: _Optional[int] = ..., y: _Optional[int] = ..., width: _Optional[int] = ..., height: _Optional[int] = ..., confidence: _Optional[float] = ..., classification_result: _Optional[_Iterable[_Union[ClassificationResult, _Mapping]]] = ...) -> None: ...
 
 class ClassificationResult(_message.Message):
-    __slots__ = ["classification_result"]
-    CLASSIFICATION_RESULT_FIELD_NUMBER: _ClassVar[int]
-    classification_result: _containers.RepeatedCompositeFieldContainer[SingleClassificationResult]
-    def __init__(self, classification_result: _Optional[_Iterable[_Union[SingleClassificationResult, _Mapping]]] = ...) -> None: ...
+    __slots__ = ["class_name", "probability"]
+    CLASS_NAME_FIELD_NUMBER: _ClassVar[int]
+    PROBABILITY_FIELD_NUMBER: _ClassVar[int]
+    class_name: str
+    probability: float
+    def __init__(self, class_name: _Optional[str] = ..., probability: _Optional[float] = ...) -> None: ...
 
 class DeviceDetails(_message.Message):
     __slots__ = ["device_name", "group_name"]
@@ -51,7 +53,7 @@ class Image(_message.Message):
     height: int
     image_bytes: bytes
     width: int
-    def __init__(self, width: _Optional[int] = ..., height: _Optional[int] = ..., channels: _Optional[int] = ..., image_bytes: _Optional[bytes] = ...) -> None: ...
+    def __init__(self, height: _Optional[int] = ..., width: _Optional[int] = ..., channels: _Optional[int] = ..., image_bytes: _Optional[bytes] = ...) -> None: ...
 
 class ImageBatch(_message.Message):
     __slots__ = ["batch_size", "channels", "height", "image_bytes", "width"]
@@ -65,7 +67,7 @@ class ImageBatch(_message.Message):
     height: int
     image_bytes: bytes
     width: int
-    def __init__(self, width: _Optional[int] = ..., height: _Optional[int] = ..., channels: _Optional[int] = ..., batch_size: _Optional[int] = ..., image_bytes: _Optional[bytes] = ...) -> None: ...
+    def __init__(self, height: _Optional[int] = ..., width: _Optional[int] = ..., channels: _Optional[int] = ..., batch_size: _Optional[int] = ..., image_bytes: _Optional[bytes] = ...) -> None: ...
 
 class InferenceStats(_message.Message):
     __slots__ = ["error_message", "inference_device", "latency"]
@@ -77,18 +79,10 @@ class InferenceStats(_message.Message):
     latency: int
     def __init__(self, latency: _Optional[int] = ..., inference_device: _Optional[_Union[InferenceDevice, str]] = ..., error_message: _Optional[str] = ...) -> None: ...
 
-class SingleClassificationResult(_message.Message):
-    __slots__ = ["class_name", "probability"]
-    CLASS_NAME_FIELD_NUMBER: _ClassVar[int]
-    PROBABILITY_FIELD_NUMBER: _ClassVar[int]
-    class_name: str
-    probability: float
-    def __init__(self, class_name: _Optional[str] = ..., probability: _Optional[float] = ...) -> None: ...
-
 class SingleImagePrediction(_message.Message):
-    __slots__ = ["bounding_boxes", "classification_results", "device_details", "inference_stats", "model", "prediction", "raw_image", "timestamp"]
+    __slots__ = ["bounding_boxes", "classification_result", "device_details", "inference_stats", "model", "prediction", "raw_image", "timestamp"]
     BOUNDING_BOXES_FIELD_NUMBER: _ClassVar[int]
-    CLASSIFICATION_RESULTS_FIELD_NUMBER: _ClassVar[int]
+    CLASSIFICATION_RESULT_FIELD_NUMBER: _ClassVar[int]
     DEVICE_DETAILS_FIELD_NUMBER: _ClassVar[int]
     INFERENCE_STATS_FIELD_NUMBER: _ClassVar[int]
     MODEL_FIELD_NUMBER: _ClassVar[int]
@@ -96,14 +90,14 @@ class SingleImagePrediction(_message.Message):
     RAW_IMAGE_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     bounding_boxes: _containers.RepeatedCompositeFieldContainer[BoundingBox]
-    classification_results: _containers.RepeatedCompositeFieldContainer[ClassificationResult]
+    classification_result: _containers.RepeatedCompositeFieldContainer[ClassificationResult]
     device_details: DeviceDetails
     inference_stats: InferenceStats
     model: VisionModel
     prediction: bytes
     raw_image: Image
     timestamp: int
-    def __init__(self, timestamp: _Optional[int] = ..., device_details: _Optional[_Union[DeviceDetails, _Mapping]] = ..., model: _Optional[_Union[VisionModel, _Mapping]] = ..., raw_image: _Optional[_Union[Image, _Mapping]] = ..., prediction: _Optional[bytes] = ..., inference_stats: _Optional[_Union[InferenceStats, _Mapping]] = ..., classification_results: _Optional[_Iterable[_Union[ClassificationResult, _Mapping]]] = ..., bounding_boxes: _Optional[_Iterable[_Union[BoundingBox, _Mapping]]] = ...) -> None: ...
+    def __init__(self, timestamp: _Optional[int] = ..., device_details: _Optional[_Union[DeviceDetails, _Mapping]] = ..., model: _Optional[_Union[VisionModel, _Mapping]] = ..., raw_image: _Optional[_Union[Image, _Mapping]] = ..., prediction: _Optional[bytes] = ..., inference_stats: _Optional[_Union[InferenceStats, _Mapping]] = ..., classification_result: _Optional[_Iterable[_Union[ClassificationResult, _Mapping]]] = ..., bounding_boxes: _Optional[_Iterable[_Union[BoundingBox, _Mapping]]] = ...) -> None: ...
 
 class VisionModel(_message.Message):
     __slots__ = ["name", "type", "version"]

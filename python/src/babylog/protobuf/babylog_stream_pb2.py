@@ -13,17 +13,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x62\x61\x62ylog_stream.proto\x12\x0e\x62\x61\x62ylog_stream\"[\n\x0bVisionModel\x12-\n\x04type\x18\x01 \x01(\x0e\x32\x1f.babylog_stream.VisionModelType\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\"L\n\rDeviceDetails\x12\x13\n\x0b\x64\x65vice_name\x18\x01 \x01(\t\x12\x17\n\ngroup_name\x18\x02 \x01(\tH\x00\x88\x01\x01\x42\r\n\x0b_group_name\"_\n\x05Image\x12\r\n\x05width\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\x12\x15\n\x08\x63hannels\x18\x03 \x01(\x05H\x00\x88\x01\x01\x12\x13\n\x0bimage_bytes\x18\x04 \x01(\x0c\x42\x0b\n\t_channels\"f\n\nImageBatch\x12\r\n\x05width\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\x12\x10\n\x08\x63hannels\x18\x03 \x01(\x05\x12\x12\n\nbatch_size\x18\x04 \x01(\x05\x12\x13\n\x0bimage_bytes\x18\x05 \x01(\x0c\"E\n\x1aSingleClassificationResult\x12\x12\n\nclass_name\x18\x01 \x01(\t\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\"a\n\x14\x43lassificationResult\x12I\n\x15\x63lassification_result\x18\x01 \x03(\x0b\x32*.babylog_stream.SingleClassificationResult\"\x9c\x01\n\x0b\x42oundingBox\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05width\x18\x03 \x01(\x05\x12\x0e\n\x06height\x18\x04 \x01(\x05\x12\x12\n\nconfidence\x18\x05 \x01(\x02\x12\x44\n\x16\x63lassification_results\x18\x06 \x01(\x0b\x32$.babylog_stream.ClassificationResult\"\x8a\x01\n\x0eInferenceStats\x12\x0f\n\x07latency\x18\x01 \x01(\x05\x12\x39\n\x10inference_device\x18\x02 \x01(\x0e\x32\x1f.babylog_stream.InferenceDevice\x12\x1a\n\rerror_message\x18\x03 \x01(\tH\x00\x88\x01\x01\x42\x10\n\x0e_error_message\"\xac\x03\n\x15SingleImagePrediction\x12\x11\n\ttimestamp\x18\x01 \x01(\x03\x12\x35\n\x0e\x64\x65vice_details\x18\x02 \x01(\x0b\x32\x1d.babylog_stream.DeviceDetails\x12*\n\x05model\x18\x03 \x01(\x0b\x32\x1b.babylog_stream.VisionModel\x12(\n\traw_image\x18\x04 \x01(\x0b\x32\x15.babylog_stream.Image\x12\x17\n\nprediction\x18\x05 \x01(\x0cH\x00\x88\x01\x01\x12<\n\x0finference_stats\x18\x06 \x01(\x0b\x32\x1e.babylog_stream.InferenceStatsH\x01\x88\x01\x01\x12\x44\n\x16\x63lassification_results\x18\x07 \x03(\x0b\x32$.babylog_stream.ClassificationResult\x12\x33\n\x0e\x62ounding_boxes\x18\x08 \x03(\x0b\x32\x1b.babylog_stream.BoundingBoxB\r\n\x0b_predictionB\x12\n\x10_inference_stats*4\n\x0fVisionModelType\x12\x12\n\x0e\x43LASSIFICATION\x10\x00\x12\r\n\tDETECTION\x10\x01*-\n\x0fInferenceDevice\x12\x07\n\x03\x43PU\x10\x00\x12\x07\n\x03GPU\x10\x01\x12\x08\n\x04\x43UDA\x10\x02\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x62\x61\x62ylog_stream.proto\x12\x0e\x62\x61\x62ylog_stream\"[\n\x0bVisionModel\x12-\n\x04type\x18\x01 \x01(\x0e\x32\x1f.babylog_stream.VisionModelType\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\"L\n\rDeviceDetails\x12\x13\n\x0b\x64\x65vice_name\x18\x01 \x01(\t\x12\x17\n\ngroup_name\x18\x02 \x01(\tH\x00\x88\x01\x01\x42\r\n\x0b_group_name\"_\n\x05Image\x12\x0e\n\x06height\x18\x01 \x01(\x05\x12\r\n\x05width\x18\x02 \x01(\x05\x12\x15\n\x08\x63hannels\x18\x03 \x01(\x05H\x00\x88\x01\x01\x12\x13\n\x0bimage_bytes\x18\x04 \x01(\x0c\x42\x0b\n\t_channels\"f\n\nImageBatch\x12\x0e\n\x06height\x18\x01 \x01(\x05\x12\r\n\x05width\x18\x02 \x01(\x05\x12\x10\n\x08\x63hannels\x18\x03 \x01(\x05\x12\x12\n\nbatch_size\x18\x04 \x01(\x05\x12\x13\n\x0bimage_bytes\x18\x05 \x01(\x0c\"?\n\x14\x43lassificationResult\x12\x12\n\nclass_name\x18\x01 \x01(\t\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\"\x9b\x01\n\x0b\x42oundingBox\x12\t\n\x01x\x18\x01 \x01(\x05\x12\t\n\x01y\x18\x02 \x01(\x05\x12\r\n\x05width\x18\x03 \x01(\x05\x12\x0e\n\x06height\x18\x04 \x01(\x05\x12\x12\n\nconfidence\x18\x05 \x01(\x02\x12\x43\n\x15\x63lassification_result\x18\x06 \x03(\x0b\x32$.babylog_stream.ClassificationResult\"\x8a\x01\n\x0eInferenceStats\x12\x0f\n\x07latency\x18\x01 \x01(\x05\x12\x39\n\x10inference_device\x18\x02 \x01(\x0e\x32\x1f.babylog_stream.InferenceDevice\x12\x1a\n\rerror_message\x18\x03 \x01(\tH\x00\x88\x01\x01\x42\x10\n\x0e_error_message\"\xab\x03\n\x15SingleImagePrediction\x12\x11\n\ttimestamp\x18\x01 \x01(\x03\x12\x35\n\x0e\x64\x65vice_details\x18\x02 \x01(\x0b\x32\x1d.babylog_stream.DeviceDetails\x12*\n\x05model\x18\x03 \x01(\x0b\x32\x1b.babylog_stream.VisionModel\x12(\n\traw_image\x18\x04 \x01(\x0b\x32\x15.babylog_stream.Image\x12\x17\n\nprediction\x18\x05 \x01(\x0cH\x00\x88\x01\x01\x12<\n\x0finference_stats\x18\x06 \x01(\x0b\x32\x1e.babylog_stream.InferenceStatsH\x01\x88\x01\x01\x12\x43\n\x15\x63lassification_result\x18\x07 \x03(\x0b\x32$.babylog_stream.ClassificationResult\x12\x33\n\x0e\x62ounding_boxes\x18\x08 \x03(\x0b\x32\x1b.babylog_stream.BoundingBoxB\r\n\x0b_predictionB\x12\n\x10_inference_stats*4\n\x0fVisionModelType\x12\x12\n\x0e\x43LASSIFICATION\x10\x00\x12\r\n\tDETECTION\x10\x01*-\n\x0fInferenceDevice\x12\x07\n\x03\x43PU\x10\x00\x12\x07\n\x03GPU\x10\x01\x12\x08\n\x04\x43UDA\x10\x02\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'babylog_stream_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _VISIONMODELTYPE._serialized_start=1313
-  _VISIONMODELTYPE._serialized_end=1365
-  _INFERENCEDEVICE._serialized_start=1367
-  _INFERENCEDEVICE._serialized_end=1412
+  _VISIONMODELTYPE._serialized_start=1206
+  _VISIONMODELTYPE._serialized_end=1258
+  _INFERENCEDEVICE._serialized_start=1260
+  _INFERENCEDEVICE._serialized_end=1305
   _VISIONMODEL._serialized_start=40
   _VISIONMODEL._serialized_end=131
   _DEVICEDETAILS._serialized_start=133
@@ -32,14 +32,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _IMAGE._serialized_end=306
   _IMAGEBATCH._serialized_start=308
   _IMAGEBATCH._serialized_end=410
-  _SINGLECLASSIFICATIONRESULT._serialized_start=412
-  _SINGLECLASSIFICATIONRESULT._serialized_end=481
-  _CLASSIFICATIONRESULT._serialized_start=483
-  _CLASSIFICATIONRESULT._serialized_end=580
-  _BOUNDINGBOX._serialized_start=583
-  _BOUNDINGBOX._serialized_end=739
-  _INFERENCESTATS._serialized_start=742
-  _INFERENCESTATS._serialized_end=880
-  _SINGLEIMAGEPREDICTION._serialized_start=883
-  _SINGLEIMAGEPREDICTION._serialized_end=1311
+  _CLASSIFICATIONRESULT._serialized_start=412
+  _CLASSIFICATIONRESULT._serialized_end=475
+  _BOUNDINGBOX._serialized_start=478
+  _BOUNDINGBOX._serialized_end=633
+  _INFERENCESTATS._serialized_start=636
+  _INFERENCESTATS._serialized_end=774
+  _SINGLEIMAGEPREDICTION._serialized_start=777
+  _SINGLEIMAGEPREDICTION._serialized_end=1204
 # @@protoc_insertion_point(module_scope)
