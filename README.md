@@ -7,4 +7,20 @@ The primary goal of this library is to empower machine learning teams to log ima
 _Currently babylog only supports streaming the data to AWS. If you are using GCP or another provider please get in touch with us at founders@babylonai.dev and we'll make sure to add it into the development pipeline._
 
 ## Supported python versions
-The babylog Python library is compatible with Python version 3.7 and above. It is recommended to use the latest version of Python for best performance and stability. If you are using an older version of Python, you may need to upgrade your Python installation in order to use babylog. You can check your Python version by running the command `python --version` in your command prompt or terminal.
+The babylog Python library is compatible with **Python version 3.7 and above**. It is recommended to use the latest version of Python for best performance and stability. If you are using an older version of Python, you may need to upgrade your Python installation in order to use babylog. You can check your Python version by running the command `python --version` in your command prompt or terminal.
+
+## Installation
+Like most python packages, run: 
+
+```bash
+pip3 install babylog
+```
+
+## Getting and configuring your AWS credentials
+- Open the IAM console at https://console.aws.amazon.com/iam/
+- On the navigation menu, choose Users.
+- Choose your IAM user name (not the check box).
+- Open the Security credentials tab, and then choose Create access key.
+- To see the new access key, choose Show. Your credentials resemble the following:
+  - Access key ID: AKIAIOSFODNN7EXAMPLE
+  - Secret access key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
