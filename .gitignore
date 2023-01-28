@@ -1,4 +1,11 @@
 .idea
-.virtenv
 *.egg-info
+
+# Build
 python/build
+
+# Virtual environments 
+.virtenv
+.virtualenv
+.venv
+venv
