@@ -26,8 +26,8 @@ class LoggedPrediction:
         return MessageToDict(self._prediction.device_details)
 
     @property
-    def classification(self) -> Dict:
-        return MessageToDict(self._prediction.classification_result)
+    def classification(self) -> List[Dict]:
+        return [MessageToDict(res) for res in self._prediction.classification_result]
 
     @property
     def detection(self) -> List[Dict]:
