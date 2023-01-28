@@ -14,11 +14,11 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.8',
-    install_requires=['numpy',
-                      'PyYAML',
-                      'opencv-python',
-                      'boto3',
-                      'protobuf',
-                      'zmq'
+    install_requires=['numpy==1.24.1',
+                      'PyYAML==6.0',
+                      'opencv-python==4.7.0.68',
+                      'boto3==1.15.3',
+                      'protobuf==4.21.12',
+                      'zmq==0.0.0'
     ]
 )

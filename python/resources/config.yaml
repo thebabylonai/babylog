@@ -1,6 +1,6 @@
 device:
-  ip: '192.168.188.3'
-  port: 39000
+  ip: '127.0.0.1'
+  port: 5555
   name: '3d48b246-94f0-4e62-8231-e3f5b471db0c'
   group: 'GROUP_NAME'
 data:

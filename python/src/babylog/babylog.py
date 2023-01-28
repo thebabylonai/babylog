@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # needed because of issue https://github.com/python/cpython/issues/86813#issuecomment-1246097184
 import concurrent.futures.thread
 from concurrent.futures.thread import ThreadPoolExecutor

@@ -7,11 +7,11 @@ import numpy as np
 from babylog import Babylog, VisionModelType, InferenceDevice
 
 
-bl = Babylog('../resources/config.yaml', save_cloud=False, stream=True)
+bl = Babylog('../resources/config.yaml', save_cloud=True, stream=True)
 img = cv2.imread('../resources/acr.png')
 
 
-for i in tqdm(range(1)):
+for i in tqdm(range(100)):
     bl.log(image=img,
            prediction=img,
            model_type=VisionModelType.DETECTION,
