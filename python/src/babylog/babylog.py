@@ -1,5 +1,4 @@
 # needed because of issue https://github.com/python/cpython/issues/86813#issuecomment-1246097184
-import concurrent.futures.thread
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime
 import os
@@ -17,11 +16,6 @@ from babylog.logger import babylogger
 from babylog.protobuf import (
     VisionModelType,
     VisionModel,
-    DeviceDetails,
-    Image,
-    ImageBatch,
-    ClassificationResult,
-    BoundingBox,
     InferenceDevice,
     InferenceStats,
     SingleImagePrediction,
