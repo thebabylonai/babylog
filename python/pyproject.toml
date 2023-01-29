@@ -11,7 +11,6 @@ authors = [
   { name="Rangel Milushev", email="rangel@babylonai.dev" },
 ]
 description = "A lightweight library for logging image and prediction data for your ML and computer vision models in production."
-readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
