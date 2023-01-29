@@ -1,5 +1,7 @@
 # Welcome to Babylog
 
+[![PyPI version](https://badge.fury.io/py/babylog.svg)](https://badge.fury.io/py/babylog)
+[![pypi supported versions](https://img.shields.io/pypi/pyversions/babylog.svg)](https://pypi.python.org/pypi/babylog)
 [![GitHub Super-Linter](https://github.com/thebabylonai/babylog/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 Welcome to babylog, a Python library, designed to stream image and video data from edge devices to the cloud with ease. Babylog is maintained by [BabylonAI, a Zurich-based YC-backed startup](https://babylonai.dev).
@@ -14,13 +16,13 @@ The primary goal of this library is to empower machine learning teams to log ima
 _Currently babylog only supports streaming the data to AWS. If you are using GCP or another provider please get in touch with us at founders@babylonai.dev and we'll make sure to add it into the development pipeline._
 
 ## Supported python versions
-The babylog Python library is compatible with **Python version 3.7 and above**. It is recommended to use the latest version of Python for best performance and stability. If you are using an older version of Python, you may need to upgrade your Python installation in order to use babylog. You can check your Python version by running the command `python --version` in your command prompt or terminal.
+The babylog Python library is compatible with **Python version 3.8 and above**. It is recommended to use the latest version of Python for best performance and stability. If you are using an older version of Python, you may need to upgrade your Python installation in order to use babylog. You can check your Python version by running the command `python --version` in your command prompt or terminal.
 
 ## Installation
 Like most python packages, run: 
 
 ```bash
-pip3 install babylog
+pip install babylog
 ```
 
 ## Getting and configuring your AWS credentials
@@ -42,12 +44,13 @@ You can set your AWS credentials in a `babylog.config.yaml` file to use them wit
 
 ```yaml
 device:
-  ip: 'DEVICE_IP'
-  name: 'DEVICE_NAME'
-  group: 'GROUP_NAME'
+  ip: 'DEVICE_IP'       # device ip to be used for tcp streaming (e.g. '127.0.0.1')
+  port: DEVICE_PORT     # port number(int) for tcp streaming
+  name: 'DEVICE_NAME'   # device name (e.g. 'device-1b2a')
+  group: 'GROUP_NAME'   # group name (e.g. 'group-222X)'
 data:
-  interval: 180000        # ms between captures
-  max_workers: 4          # equivalent to max number of threads 
+  interval: 3000        # ms between captures
+  max_workers: 4        # max number of threads to be used for logging
 S3_storage:
   aws_access_key_id: 'YOUR_ACCESS_KEY'
   aws_secret_access_key: 'YOUR_SECRET_KEY'
