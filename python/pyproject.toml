@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "babylog"
-version = "1.0.1"
+version = "1.0.0"
 authors = [
   { name="BabylonAI, Inc.", email="support@babylonai.dev" },
   { name="Ahmad Roumie", email="ahmad@babylonai.dev"},
