@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "babylog"
+version = "1.0.0"
+authors = [
+  { name="BabylonAI, Inc.", email="support@babylonai.dev" },
+  { name="Ahmad Roumie", email="ahmad@babylonai.dev"},
+  { name="Rangel Milushev", email="rangel@babylonai.dev" },
+]
+description = "A lightweight library for logging image and prediction data for your ML and computer vision models in production."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+]
+install_requires=[
+    "numpy==1.24.1",
+    "PyYAML==6.0",
+    "opencv-python==4.7.0.68",
+    "boto3==1.15.3",
+    "protobuf==4.21.12",
+    "zmq==0.0.0",
+]
+[project.urls]
+"Homepage" = "https://github.com/thebabylonai/babylog"
+"Bug Tracker" = "https://github.com/thebabylonai/babylog/issues"

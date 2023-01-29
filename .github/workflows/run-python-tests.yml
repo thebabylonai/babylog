@@ -26,6 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         (cd python && if [ -f requirements.txt ]; then pip install -r requirements.txt; fi)
         (cd python && if [ -f dev-requirements.txt ]; then pip install -r dev-requirements.txt; fi)
+        (cd python && pip install .)
     - name: Test with pytest
       run: |
         pytest
