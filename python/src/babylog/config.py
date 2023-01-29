@@ -53,4 +53,4 @@ class Config:
             )
         except Exception as e:
             babylogger.error(f"could not properly setup config: {e}")
-            raise ValueError(f"could not properly setup config: {e}")
+            raise

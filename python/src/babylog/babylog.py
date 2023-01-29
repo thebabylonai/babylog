@@ -50,7 +50,6 @@ class Babylog:
         self.stream = stream
         self._shutdown = False
         self._last_logged = time.perf_counter()
-        babylogger.info(f"self.stream: {self.stream}")
         if self.stream:
             self._publisher = Publisher(
                 self.config.device.ip, self.config.device.ip, self.config.device.name
@@ -96,6 +95,12 @@ class Babylog:
             single_image_prediction.raw_image.CopyFrom(ndarray_to_Image(array_=image))
             single_image_prediction.model.CopyFrom(
                 VisionModel(type=model_type, version=model_version, name=model_name)
+            )
+            single_image_prediction.device_details.CopyFrom(
+                DeviceDetails(
+                    device_name=self.config.device.name,
+                    group_name=self.config.device.group,
+                )
             )
 
             if prediction is not None:
@@ -172,7 +177,7 @@ class Babylog:
             self._last_logged = time.perf_counter()
         except Exception as e:
             babylogger.error(f"could not log prediction: {e}")
-            raise ValueError(f"could not log prediction: {e}")
+            raise
 
     @property
     def shutdown(self):
