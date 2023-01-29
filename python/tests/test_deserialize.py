@@ -6,6 +6,7 @@ from datetime import datetime
 from freezegun import freeze_time
 
 from babylog import Babylog, VisionModelType, InferenceDevice, LoggedPrediction
+from babylog.utils import image_to_bytes
 
 
 def teardown_module(module):
@@ -60,7 +61,7 @@ class TestDeserialize:
     def test_deserialized_prediction_model(self, get_prediction):
         deserialized_model = get_prediction.model
         pre_serialized_model = {
-            "type": VisionModelType.DETECTION,
+            "type": "DETECTION",
             "name": "test_model",
             "version": "1.0.0",
         }
@@ -70,6 +71,11 @@ class TestDeserialize:
         deserialized_model = get_prediction.inference_stats
         pre_serialized_model = {
             "latency": 500,
-            "inference_device": InferenceDevice.CPU,
+            "inferenceDevice": "CPU",
+            "errorMessage": "",
         }
         assert deserialized_model == pre_serialized_model
+
+    def test_deserialized_prediction_image(self, get_prediction):
+        deserialized_image = get_prediction._prediction.raw_image.image_bytes
+        assert deserialized_image == image_to_bytes(self.img)
