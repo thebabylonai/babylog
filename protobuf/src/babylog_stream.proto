@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package babylog_stream;
+
+
+enum VisionModelType {
+    NONE = 0;
+    CLASSIFICATION = 1;
+    DETECTION = 2;
+}
+
+message VisionModel {
+    VisionModelType type = 1;
+    string version = 2;
+    string name = 3;
+}
+
+message DeviceDetails {
+    string device_name = 1;
+    optional string group_name = 2;
+}
+
+message Image {
+    int32 height = 1;
+    int32 width = 2;
+    optional int32 channels = 3;
+    bytes image_bytes = 4;
+}
+
+message ImageBatch {
+    int32 height = 1;
+    int32 width = 2;
+    int32 channels = 3;
+    int32 batch_size = 4;
+    bytes image_bytes = 5;
+}
+
+message ClassificationResult {
+    string class_name = 1;
+    float probability = 2;
+}
+
+message BoundingBox {
+    int32 x = 1;
+    int32 y = 2;
+    int32 width = 3;
+    int32 height = 4;
+    float confidence = 5;
+    repeated ClassificationResult classification_result = 6;
+}
+
+enum InferenceDevice {
+    DEFAULT = 0;
+    CPU = 1;
+    GPU = 2;
+    CUDA = 3;
+}
+
+message InferenceStats {
+    int32 latency = 1;
+    InferenceDevice inference_device = 2;
+    optional string error_message = 3;
+}
+
+message ImagePrediction {
+    int64 timestamp = 1; // ms
+    DeviceDetails device_details = 2;
+    VisionModel model = 3;
+    Image raw_image = 4;
+    optional Image prediction = 5;
+    optional InferenceStats inference_stats = 6;
+    repeated ClassificationResult classification_result = 7;
+    repeated BoundingBox bounding_boxes = 8;
+}

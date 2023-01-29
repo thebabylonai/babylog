@@ -1,0 +1,13 @@
+device:
+  ip: '127.0.0.1'
+  port: 5555
+  name: 'DEVICE_NAME'
+  group: 'GROUP_NAME'
+data:
+  interval: 3000        # ms between captures
+  max_workers: 4
+S3_storage:
+  aws_access_key_id: 'YOUR_ACCESS_KEY'
+  aws_secret_access_key: 'YOUR_SECRET_KEY'
+  bucket_name: 'YOUR_BUCKET_NAME'
+  bucket_region: 'YOUR_BUCKET_REGION'

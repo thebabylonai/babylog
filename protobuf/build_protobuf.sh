@@ -1,0 +1,1 @@
+./protoc/protoc-21.12-linux-x86_64/bin/protoc -I=src --python_out=../python/src/babylog/protobuf --pyi_out=../python/src/babylog/protobuf src/babylog_stream.proto
