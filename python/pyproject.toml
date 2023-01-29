@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "babylog_BABYLONAI"
+name = "babylog"
 version = "1.0.0"
 authors = [
   { name="BabylonAI, Inc.", email="support@babylonai.dev" },
@@ -19,7 +19,14 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",
 ]
-
+install_requires=[
+    "numpy==1.24.1",
+    "PyYAML==6.0",
+    "opencv-python==4.7.0.68",
+    "boto3==1.15.3",
+    "protobuf==4.21.12",
+    "zmq==0.0.0",
+]
 [project.urls]
 "Homepage" = "https://github.com/thebabylonai/babylog"
 "Bug Tracker" = "https://github.com/thebabylonai/babylog/issues"
