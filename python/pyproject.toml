@@ -19,7 +19,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",
 ]
-install_requires=[
+dependencies=[
     "numpy==1.24.1",
     "PyYAML==6.0",
     "opencv-python==4.7.0.68",
