@@ -97,7 +97,10 @@ class Babylog:
                 VisionModel(type=model_type, version=model_version, name=model_name)
             )
             single_image_prediction.device_details.CopyFrom(
-                DeviceDetails(device_name=self.config.device.name, group_name=self.config.device.group)
+                DeviceDetails(
+                    device_name=self.config.device.name,
+                    group_name=self.config.device.group,
+                )
             )
 
             if prediction is not None:

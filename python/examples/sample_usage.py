@@ -23,7 +23,7 @@ for i in tqdm(range(100)):
         detection=(
             [
                 {
-                    "x": 0,
+                    "x": 1,
                     "y": 1,
                     "width": 100,
                     "height": 220,
@@ -31,7 +31,7 @@ for i in tqdm(range(100)):
                     "classification": {"dog": 0.8, "cat": 0.2},
                 },
                 {
-                    "x": 0,
+                    "x": 1,
                     "y": 1,
                     "width": 50,
                     "height": 150,
