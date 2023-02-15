@@ -16,7 +16,7 @@ def teardown_module(module):
 
 class TestDeserialize:
     def setup_class(self):
-        self.bl = Babylog("./python/resources/config.yaml")
+        self.bl = Babylog("./python/resources/babylog.config.yaml")
         self.img = cv2.imread("./python/resources/panda.jpg")
 
     @freeze_time("2023-01-29 03:21:34", tz_offset=0)

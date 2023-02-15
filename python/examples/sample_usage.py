@@ -7,7 +7,7 @@ import numpy as np
 from babylog import Babylog, VisionModelType, InferenceDevice
 
 
-bl = Babylog("../resources/config.yaml", save_cloud=False, stream=False)
+bl = Babylog("../resources/babylog.config.yaml", save_cloud=False, stream=False)
 img = cv2.imread("../resources/panda.jpg")
 
 
