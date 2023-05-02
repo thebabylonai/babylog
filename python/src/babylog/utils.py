@@ -78,8 +78,15 @@ def detection_from_dict(bboxes: List[BoundingBoxDict]) -> List[BoundingBox]:
 
 
 class ImageSequence:
-    def __init__(self, path=None, extensions=None, timestamp_file=None, 
-                 rotate=False, scale=0.5, **kwargs):
+    def __init__(
+        self,
+        path=None,
+        extensions=None,
+        timestamp_file=None,
+        rotate=False,
+        scale=0.5,
+        **kwargs
+    ):
         self.path = path
         self.rotate = rotate
         self.scale = scale
@@ -99,16 +106,22 @@ class ImageSequence:
         if timestamp_file is None:
             self.timestamps = None
         else:
-            with open(timestamp_file, 'r') as filehandle:
-                self.timestamps = [timestamp.rstrip() for timestamp in filehandle.readlines()]
+            with open(timestamp_file, "r") as filehandle:
+                self.timestamps = [
+                    timestamp.rstrip() for timestamp in filehandle.readlines()
+                ]
 
         if self.path is not None:
             if self.check_directory():
                 self.is_video = False
                 if not extensions:
                     extensions = [".jpg", ".jpeg", ".png"]
-                self.images = [f for f in sorted(os.listdir(self.path)) if os.path.splitext(f)[1] in extensions]
-                babylogger.info('Found {} images in folder'.format(len(self.images)))
+                self.images = [
+                    f
+                    for f in sorted(os.listdir(self.path))
+                    if os.path.splitext(f)[1] in extensions
+                ]
+                babylogger.info("Found {} images in folder".format(len(self.images)))
                 if not self.images:
                     self.is_image = False
                     raise NotImplementedError
@@ -123,12 +136,14 @@ class ImageSequence:
                 self.video = cv2.VideoCapture(self.path)
 
         self.get_dimensions()
-        self.scaled_dim = (int(self.width * self.scale),
-                           int(self.height * self.scale))
-        config = {'video': self.is_video, 'image': self.is_image,
-                  'scaled dimensions': self.scaled_dim,
-                  'frame count': self.frame_count}
-        babylogger.info('[CONFIG video]: {}'.format(config))
+        self.scaled_dim = (int(self.width * self.scale), int(self.height * self.scale))
+        config = {
+            "video": self.is_video,
+            "image": self.is_image,
+            "scaled dimensions": self.scaled_dim,
+            "frame count": self.frame_count,
+        }
+        babylogger.info("[CONFIG video]: {}".format(config))
         super().__init__(**kwargs)
 
     def check_directory(self):
@@ -161,7 +176,7 @@ class ImageSequence:
                 self.video = cv2.VideoCapture(self.path)
 
         if self.is_image:
-            image = cv2.imread(self.path + '/' + self.images[0])
+            image = cv2.imread(self.path + "/" + self.images[0])
             self.width = image.shape[1]
             self.height = image.shape[0]
             self.frame_count = len(self.images)
@@ -173,34 +188,38 @@ class ImageSequence:
             ret, frame = self.video.read()
             if not ret:
                 frame = None
-                babylogger.info('Could not read frame')
+                babylogger.info("Could not read frame")
             else:
                 pass
 
         if self.is_image:
             image_path = self.images[frame_num]
             try:
-                frame = cv2.imread(self.path + '/' + image_path)
+                frame = cv2.imread(self.path + "/" + image_path)
             except Exception as e:
-                babylogger.error('{e}'.format(e))
+                babylogger.error("{e}".format(e))
                 frame = None
 
         try:
-            frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE) if self.rotate else frame
+            frame = (
+                cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+                if self.rotate
+                else frame
+            )
             frame = cv2.resize(frame, self.scaled_dim, interpolation=cv2.INTER_AREA)
         except cv2.error as e:
-            babylogger.error('Invalid frame!')
+            babylogger.error("Invalid frame!")
             frame = None
             pass
 
         self.frame = frame
 
     def check_frames(self, max_frames=300):
-      if self.frame_count > max_frames:
-        return False
-      return True
+        if self.frame_count > max_frames:
+            return False
+        return True
 
     def get_frames(self):
-      for i in tqdm(range(self.frame_count)):
-        self.get_frame(i)
-        yield self.frame
+        for i in tqdm(range(self.frame_count)):
+            self.get_frame(i)
+            yield self.frame
