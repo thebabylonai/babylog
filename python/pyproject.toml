@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "babylog"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="BabylonAI, Inc.", email="support@babylonai.dev" },
   { name="Ahmad Roumie", email="ahmad@babylonai.dev"},
@@ -20,7 +20,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies=[
-    "numpy>=1.24.1",
+    "numpy>=1.23",
     "PyYAML>=6.0",
     "opencv-python>=4.7.0.68",
     "boto3==1.15.3",

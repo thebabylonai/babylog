@@ -1,4 +1,4 @@
-numpy>=1.24.1
+numpy>=1.23
 PyYAML>=6.0
 opencv-python>=4.7.0.68
 boto3==1.15.3
