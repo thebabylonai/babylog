@@ -43,7 +43,7 @@ class LoggedPrediction:
 
     @property
     def timestamp(self) -> int:
-        return self.prediction.timestamp
+        return self._prediction.timestamp
 
     @classmethod
     def from_path(cls, filepath: str):
